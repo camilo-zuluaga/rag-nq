@@ -19,3 +19,9 @@ from llama_index.vector_stores.chroma import ChromaVectorStore
 import chromadb
 
 load_dotenv()
+
+embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-small-en-v1.5")
+
+# Global settings (still will pass embed_model as param)
+Settings.embed_model = embed_model
+Settings.llm = OpenAI(model="gpt-4o-mini")
