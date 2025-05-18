@@ -90,3 +90,7 @@ query_engine = RetrieverQueryEngine(
 query_engine.update_prompts(
     {"response_synthesizer:text_qa_template":prompt_tmpl}
 )
+
+# Test prompt
+response = query_engine.query("How to see the configuration of the queue?")
+print(response)
