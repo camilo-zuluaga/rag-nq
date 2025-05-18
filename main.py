@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 
+from llama_index.core.base.embeddings.base import similarity
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.openai import OpenAI
 from llama_index.core import (
@@ -71,4 +72,21 @@ Here is the question and context for you to work with:
 prompt_tmpl = PromptTemplate(
     template=template,
     template_var_mappings={"query_str": "question", "context_str": "context"},
+)
+
+# Retrievers and synthesizer
+retriever = VectorIndexRetriever(
+    index=index,
+    similarity_top_k=10
+)
+
+response_synthesizer = get_response_synthesizer()
+
+query_engine = RetrieverQueryEngine(
+    retriever=retriever,
+    response_synthesizer=response_synthesizer,
+)
+
+query_engine.update_prompts(
+    {"response_synthesizer:text_qa_template":prompt_tmpl}
 )
